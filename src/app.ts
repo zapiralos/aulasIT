@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
+import userRouter from './routes/user.router';
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ app.use(cors());
 app.use(morgan('tiny'));
 
 app.use(json());
+
+app.use('/api/v1/users', userRouter);
 
 connect()
   .then(() => {

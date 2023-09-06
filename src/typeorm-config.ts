@@ -1,14 +1,16 @@
 import { DataSource } from 'typeorm';
+import 'reflect-metadata';
 
 export const dataSource = new DataSource({
   type: 'mysql',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
-  password: String(process.env.DB_PASSWORD),
   database: process.env.DB_DATABASE,
-  entities: ['src/entities/*.js'],
-  synchronize: true
+  synchronize: true,
+  entities: ['src/entities/**/*.ts'],
+  migrations: ['src/migrations/**/*.ts'],
+  subscribers: ['src/subscribers/**/*.ts']
 });
 
 export async function connect (): Promise<DataSource> {
