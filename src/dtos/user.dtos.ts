@@ -62,3 +62,38 @@ export class UserCreateDTO {
   @IsNotEmpty()
     userType: number;
 }
+
+export class UserUpdateDTO {
+  @IsString()
+  @IsOptional()
+  @MinLength(8)
+  @MaxLength(100)
+    password: string;
+
+  @IsString()
+  @IsOptional()
+  @MinLength(8)
+  @MaxLength(100)
+    confirmPassword: string;
+
+  @IsString()
+  @IsOptional()
+    oldPassword: string;
+
+  @Transform(data => data.value === '' ? null : data.value)
+  @IsEmail()
+  @IsOptional()
+  @Transform(({ value }) => value.trim())
+    email: string;
+
+  @Transform(data => data.value === '' ? null : data.value)
+  @IsEmail()
+  @IsOptional()
+  @Transform(({ value }) => value.trim())
+    confirmEmail: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(100)
+    address: string;
+}
