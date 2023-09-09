@@ -1,8 +1,8 @@
 import { Entity, Column } from 'typeorm';
-import { baseEntity } from './base.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity('users')
-export class User extends baseEntity {
+export class User extends BaseEntity {
   @Column({
     type: 'varchar',
     unique: true
