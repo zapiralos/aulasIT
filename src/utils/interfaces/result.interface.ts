@@ -6,3 +6,6 @@ export interface IResult {
   entity?: baseEntity | null
   resultKeys: string[]
 }
+
+export const RESULT_OK = 'ok';
+export const NOT_FOUND = 'not-found';

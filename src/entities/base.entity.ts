@@ -5,12 +5,18 @@ export class baseEntity {
   @PrimaryGeneratedColumn()
     id: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at'
+  })
     createdAt: Date;
 
-  @UpdateDateColumn()
-    updatedAt: Date;
+  @UpdateDateColumn({
+    name: 'updated_at'
+  })
+    updatedAt?: Date | null;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({
+    name: 'deleted_at'
+  })
     deletedAt?: Date | null;
 }

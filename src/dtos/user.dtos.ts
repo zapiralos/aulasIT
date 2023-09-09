@@ -1,14 +1,8 @@
 import { Transform } from 'class-transformer';
-import { IsString, IsNotEmpty, MinLength, MaxLength, IsEmail, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, MinLength, MaxLength, IsEmail, IsNumber, IsOptional, IsISO8601 } from 'class-validator';
 import { capitalizeFirstLetter } from '../utils/functions';
 
 export class UserCreateDTO {
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(6)
-  @MaxLength(100)
-    username: string;
-
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
@@ -60,7 +54,28 @@ export class UserCreateDTO {
 
   @IsNumber()
   @IsNotEmpty()
-    userType: number;
+    phoneNumber: number;
+
+  @IsISO8601()
+  @IsNotEmpty()
+    birthDate: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+    guardian: string;
+
+  @IsNumber()
+  @IsOptional()
+    positionId?: number | null;
+
+  @IsNumber()
+  @IsOptional()
+    areaId?: number | null;
+
+  @IsNumber()
+  @IsOptional()
+    socialWellfareId?: number | null;
 }
 
 export class UserUpdateDTO {
@@ -96,4 +111,14 @@ export class UserUpdateDTO {
   @IsOptional()
   @MaxLength(100)
     address: string;
+
+  @IsNumber()
+  @IsOptional()
+  @MaxLength(15)
+    phoneNumber: number;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(100)
+    guardian: string;
 }

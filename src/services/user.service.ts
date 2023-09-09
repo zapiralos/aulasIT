@@ -3,7 +3,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { validate } from 'class-validator';
 import { extractErrorKeysFromErrors } from '../utils/functions';
 import { StatusCodes } from 'http-status-codes';
-import { type IResult } from '../utils/interfaces/result.interface';
+import { RESULT_OK, type IResult, NOT_FOUND } from '../utils/interfaces/result.interface';
 import bcrypt from 'bcrypt';
 import { type User } from '../entities/user.entity';
 
@@ -18,7 +18,7 @@ export class UserService {
 
       return {
         statusCode: StatusCodes.BAD_REQUEST,
-        message: `Validation failed while creating user: ${errors}`,
+        message: `Hubo un error de validación al actualizar el usuario: ${errors}.`,
         entity: null,
         resultKeys: errorKeys
       };
@@ -32,9 +32,9 @@ export class UserService {
 
     return {
       statusCode: StatusCodes.OK,
-      message: 'User created successfully!',
+      message: 'Usuario creado con éxito!.',
       entity: userCreated,
-      resultKeys: ['ok']
+      resultKeys: [RESULT_OK]
     };
   }
 
@@ -48,17 +48,17 @@ export class UserService {
     if (currentUser === null) {
       return {
         statusCode: StatusCodes.NOT_FOUND,
-        message: `No user found with ID: ${id}`,
+        message: `No se encontró un usuario con el ID: ${id}.`,
         entity: null,
-        resultKeys: ['not-found']
+        resultKeys: [NOT_FOUND]
       };
     }
 
     return {
       statusCode: StatusCodes.OK,
-      message: 'User found',
+      message: `Usuario con ID ${id} encontrado.`,
       entity: currentUser,
-      resultKeys: ['ok']
+      resultKeys: [RESULT_OK]
     };
   }
 
@@ -70,7 +70,7 @@ export class UserService {
 
       return {
         statusCode: StatusCodes.BAD_REQUEST,
-        message: `Validation failed while updating user: ${errors}`,
+        message: `Hubo un error de validación al actualizar el usuario: ${errors}.`,
         entity: null,
         resultKeys: errorKeys
       };
@@ -81,9 +81,9 @@ export class UserService {
     if (currentUser === null) {
       return {
         statusCode: StatusCodes.NOT_FOUND,
-        message: `No user found with ID: ${id}`,
+        message: `No se encontró un usuario con el ID: ${id}.`,
         entity: null,
-        resultKeys: ['not-found']
+        resultKeys: [NOT_FOUND]
       };
     }
 
@@ -93,9 +93,9 @@ export class UserService {
 
     return {
       statusCode: StatusCodes.OK,
-      message: `User ${updatedUser?.username} updated`,
+      message: 'Los datos del usuario han sido actualizados con éxito.',
       entity: updatedUser,
-      resultKeys: ['ok']
+      resultKeys: [RESULT_OK]
     };
   }
 
@@ -105,9 +105,9 @@ export class UserService {
     if (userToDelete === null) {
       return {
         statusCode: StatusCodes.NOT_FOUND,
-        message: `No user found with ID: ${id}`,
+        message: `No se encontró un usuario con el ID: ${id}.`,
         entity: null,
-        resultKeys: ['not-found']
+        resultKeys: [NOT_FOUND]
       };
     }
 
@@ -115,9 +115,9 @@ export class UserService {
 
     return {
       statusCode: StatusCodes.OK,
-      message: `User with ID ${id} successfully deleted`,
+      message: `El usuario con ID ${id} fue eliminado con éxito.`,
       entity: null,
-      resultKeys: ['ok']
+      resultKeys: [RESULT_OK]
     };
   }
 }
