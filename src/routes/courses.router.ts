@@ -10,6 +10,7 @@ router.get('/list', controller.listCourses);
 router.get('/find', controller.findCourse);
 router.patch('/update', controller.updateCourse);
 router.delete('/delete', controller.deleteCourse);
+router.patch('/restore', controller.restoreCourse);
 
 // wildcard for inexistent routes
 router.use('/*', (_req: Request, res: Response) => {

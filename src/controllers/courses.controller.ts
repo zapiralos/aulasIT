@@ -71,7 +71,21 @@ export class CoursesController {
 
   async deleteCourse (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint aún no está disponible.');
+      const id = parseID(req.query.id?.toString());
+      const result = await service.deleteCourse(id);
+
+      res.status(StatusCodes.OK).send(result.message);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+    }
+  }
+
+  async restoreCourse (req: Request, res: Response): Promise<void> {
+    try {
+      const id = parseID(req.query.id?.toString());
+      const result = await service.restoreCourse(id);
+
+      res.status(StatusCodes.OK).send(result.message);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }
