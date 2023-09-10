@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { type Request, type Response } from 'express';
 import { CoursesService } from '../services/courses.service';
 import { StatusCodes } from 'http-status-codes';
@@ -38,20 +37,43 @@ export class CoursesController {
   }
 
   async findCourse (req: Request, res: Response): Promise<void> {
-    const id = parseID(req.query.id?.toString());
-    const course = await service.findCourse(id);
+    try {
+      const id = parseID(req.query.id?.toString());
+      const result = await service.findCourse(id);
 
-    res.status(StatusCodes.OK).json({
-      message: `Curso ID: ${id}`,
-      data: course
-    });
+      if (!result.entity) {
+        res.status(StatusCodes.NOT_FOUND).send(result.message);
+        return;
+      }
+
+      res.status(StatusCodes.OK).json({
+        message: result.message,
+        entity: result.entity
+      });
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+    }
   }
 
-  async updateCourse (_req: Request, res: Response): Promise<void> {
-    res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint aún no está disponible.');
+  async updateCourse (req: Request, res: Response): Promise<void> {
+    try {
+      const id = parseID(req.query.id?.toString());
+      const result = await service.updateCourse(id, req.body);
+
+      res.status(StatusCodes.CREATED).json({
+        message: result.message,
+        entity: result.entity
+      });
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+    }
   }
 
-  async deleteCourse (_req: Request, res: Response): Promise<void> {
-    res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint aún no está disponible.');
+  async deleteCourse (req: Request, res: Response): Promise<void> {
+    try {
+      res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint aún no está disponible.');
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+    }
   }
 }
