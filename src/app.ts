@@ -22,7 +22,7 @@ app.use(json());
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/courser', coursesRouter);
+app.use('/api/v1/courses', coursesRouter);
 
 connect()
   .then(() => {
