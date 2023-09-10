@@ -7,7 +7,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import userRouter from './routes/user.router';
 import authRouter from './routes/auth.router';
-import { router as coursesRouter } from './routes/course.router';
+import { router as coursesRouter } from './routes/courses.router';
 
 dotenv.config();
 

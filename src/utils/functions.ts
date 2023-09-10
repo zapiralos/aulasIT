@@ -25,3 +25,11 @@ export function extractErrorKeysFromErrors (errors: ValidationError[]): string[]
 
   return errorKeys;
 }
+
+export const parseID = (id: string | undefined): number => {
+  if (id === undefined) {
+    return 0;
+  }
+
+  return Number(id);
+};

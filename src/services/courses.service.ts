@@ -21,4 +21,16 @@ export class CoursesService {
   async listCourses (): Promise<Course[]> {
     return await repository.find();
   }
+
+  async findCourse (id: number): Promise<Course> {
+    const [course] = await repository.find({
+      where: { id }
+    });
+
+    if (course.id !== id) {
+      throw new Error(`No se encontró un curso con el ID: ${id}`);
+    }
+
+    return course;
+  }
 }
