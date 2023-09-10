@@ -1,13 +1,24 @@
-import { type Course } from '../entities/course.entity';
+import { validate } from 'class-validator';
 import { CoursesRepository } from '../repositories/courses.repository';
-import { IResult } from '../utils/interfaces/result.interface';
+import { type Course } from '../entities/course.entity';
+import { type CreateCourseDTO } from '../dtos/create-course.dto';
 
 const repository = new CoursesRepository();
 
 export class CoursesService {
-  async listCourses (): Promise<IResult> {
-    const courses = await repository.find();
+  async createCourse (courseData: CreateCourseDTO): Promise<Course> {
+    const errors = await validate(courseData);
 
-    return courses;
+    if (errors.length > 0) {
+      throw new Error(`No se pudo agregar el curso debido a: ${errors}`);
+    }
+
+    const course = repository.create(courseData);
+
+    return await repository.save(course);
+  }
+
+  async listCourses (): Promise<Course[]> {
+    return await repository.find();
   }
 }

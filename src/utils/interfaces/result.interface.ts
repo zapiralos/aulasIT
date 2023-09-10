@@ -8,12 +8,9 @@ export interface IResult {
   resultKeys: string[]
 }
 
-export interface ILoginDataResult {
-  statusCode: number
-  message: string
+export interface ILoginDataResult extends IResult {
   token: string | null
   entity: User | null
-  resultKeys: string[]
 }
 
 export const RESULT_OK = 'ok';
