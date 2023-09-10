@@ -1,11 +1,11 @@
-import { type UserUpdateDTO, type UserCreateDTO } from '../dtos/user.dtos';
-import { UserRepository } from '../repositories/user.repository';
+import { type UserUpdateDTO, type UserCreateDTO } from './dto/user.dtos';
+import { UserRepository } from './user.repository';
 import { validate } from 'class-validator';
 import { extractErrorKeysFromErrors } from '../utils/functions';
 import { StatusCodes } from 'http-status-codes';
 import { RESULT_OK, type IResult, NOT_FOUND } from '../utils/interfaces/result.interface';
 import bcrypt from 'bcrypt';
-import { type User } from '../entities/user.entity';
+import { type User } from './user.entity';
 
 const userRepository = new UserRepository();
 

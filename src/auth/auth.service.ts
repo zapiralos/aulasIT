@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
-import { type LoginDTO } from '../dtos/login.dtos';
-import { UserRepository } from '../repositories/user.repository';
+import { type LoginDTO } from './dto/login.dtos';
+import { UserRepository } from '../users/user.repository';
 import { type ILoginDataResult, NOT_FOUND, RESULT_OK } from '../utils/interfaces/result.interface';
 import { extractErrorKeysFromErrors } from '../utils/functions';
 import { StatusCodes } from 'http-status-codes';

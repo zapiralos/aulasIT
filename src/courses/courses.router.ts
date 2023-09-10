@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from 'express';
-import { CoursesController } from '../controllers/courses.controller';
+import { CoursesController } from './courses.controller';
 import { StatusCodes } from 'http-status-codes';
 
 export const router = Router();

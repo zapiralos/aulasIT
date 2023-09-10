@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-import userRouter from './routes/user.router';
-import authRouter from './routes/auth.router';
-import { router as coursesRouter } from './routes/courses.router';
+import userRouter from './users/user.router';
+import authRouter from './auth/auth.router';
+import { router as coursesRouter } from './courses/courses.router';
 
 dotenv.config();
 

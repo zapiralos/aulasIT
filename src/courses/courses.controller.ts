@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express';
-import { CoursesService } from '../services/courses.service';
+import { CoursesService } from './courses.service';
 import { StatusCodes } from 'http-status-codes';
 import { plainToInstance } from 'class-transformer';
-import { CreateCourseDTO } from '../dtos/create-course.dto';
+import { CreateCourseDTO } from './dto/create-course.dto';
 import { parseID } from '../utils/functions';
 
 const service = new CoursesService();

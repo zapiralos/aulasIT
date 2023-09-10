@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
-import { CoursesRepository } from '../repositories/courses.repository';
-import { type Course } from '../entities/course.entity';
-import { type CreateCourseDTO } from '../dtos/create-course.dto';
+import { CoursesRepository } from './courses.repository';
+import { type Course } from './course.entity';
+import { type CreateCourseDTO } from './dto/create-course.dto';
 import { type IResult } from '../utils/interfaces/result.interface';
 
 const repository = new CoursesRepository();

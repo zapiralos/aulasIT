@@ -1,5 +1,5 @@
-import { type BaseEntity } from '../../entities/base.entity';
-import { type User } from '../../entities/user.entity';
+import { type BaseEntity } from '../../base/base.entity';
+import { type User } from '../../users/user.entity';
 
 export interface IResult {
   statusCode: number

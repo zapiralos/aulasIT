@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsString, IsNotEmpty, MinLength, MaxLength, IsEmail, IsNumber, IsOptional, IsISO8601 } from 'class-validator';
-import { capitalizeFirstLetter } from '../utils/functions';
+import { capitalizeFirstLetter } from '../../utils/functions';
 
 export class UserCreateDTO {
   @IsString()

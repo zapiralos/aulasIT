@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express';
-import { UserRepository } from '../repositories/user.repository';
+import { UserRepository } from './user.repository';
 import { plainToInstance } from 'class-transformer';
-import { UserCreateDTO, UserUpdateDTO } from '../dtos/user.dtos';
-import { UserService } from '../services/user.service';
+import { UserCreateDTO, UserUpdateDTO } from './dto/user.dtos';
+import { UserService } from './user.service';
 import { StatusCodes } from 'http-status-codes';
 
 export const userRepository = new UserRepository();
