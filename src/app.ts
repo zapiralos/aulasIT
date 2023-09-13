@@ -5,10 +5,10 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-
 import userRouter from './users/user.router';
 import authRouter from './auth/auth.router';
 import { router as coursesRouter } from './courses/courses.router';
+import { router as positionsRouter } from './positions/positions.router';
 import sectorRouter from './sector/sector.router';
 
 dotenv.config();
@@ -25,6 +25,7 @@ app.use(json());
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/courses', coursesRouter);
+app.use('/api/v1/positions', positionsRouter);
 app.use('/api/v1/sectors', sectorRouter);
 
 connect()

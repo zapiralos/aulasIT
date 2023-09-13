@@ -1,5 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
+import { Position } from '../positions/position.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -51,11 +52,9 @@ export class User extends BaseEntity {
   })
     guardian: string;
 
-  @Column({
-    type: 'int',
-    name: 'id_position'
-  })
-    positionId?: number | null;
+  @Column({ default: null, name: 'positionId', type: 'int' })
+  @ManyToOne(() => Position, (position) => position.id)
+    position?: number | null;
 
   @Column({
     type: 'int',

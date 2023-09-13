@@ -2,8 +2,9 @@ import { DataSource } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
 import { User } from './users/user.entity';
 import { Course } from './courses/course.entity';
-import 'reflect-metadata';
 import { Sector } from './sector/sector.entity';
+import { Position } from './positions/position.entity';
+import 'reflect-metadata';
 
 export const dataSource = new DataSource({
   type: 'mysql',
@@ -12,7 +13,7 @@ export const dataSource = new DataSource({
   username: process.env.DB_USERNAME ?? 'root',
   database: process.env.DB_DATABASE ?? 'aulasit',
   synchronize: true,
-  entities: [BaseEntity, User, Course, Sector],
+  entities: [BaseEntity, User, Course, Sector, Position],
   migrations: ['src/migrations/**/*.ts'],
   subscribers: ['src/subscribers/**/*.ts']
 });

@@ -5,6 +5,7 @@ export interface IResult {
   statusCode: number
   message: string
   entity?: BaseEntity | null
+  entities?: BaseEntity[] | null
   resultKeys: string[]
 }
 

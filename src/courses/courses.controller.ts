@@ -14,7 +14,7 @@ export class CoursesController {
 
       const course = await service.createCourse(courseInstance);
 
-      res.status(StatusCodes.OK).json({
+      res.status(StatusCodes.CREATED).json({
         message: 'Se agregó exitosamente el nuevo curso.',
         entity: course
       });

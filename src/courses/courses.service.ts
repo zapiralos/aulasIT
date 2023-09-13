@@ -3,12 +3,9 @@ import { CoursesRepository } from './courses.repository';
 import { type Course } from './course.entity';
 import { type CreateCourseDTO } from './dto/create-course.dto';
 import { type IResult } from '../utils/interfaces/result.interface';
+import { IFindOptions } from '../utils/interfaces/options.interface';
 
 const repository = new CoursesRepository();
-
-interface FindOptions {
-  withDeleted: boolean
-}
 
 export class CoursesService {
   async createCourse (courseData: CreateCourseDTO): Promise<Course> {
@@ -27,7 +24,7 @@ export class CoursesService {
     return await repository.find();
   }
 
-  async findCourse (id: number, options?: FindOptions): Promise<Partial<IResult>> {
+  async findCourse (id: number, options?: IFindOptions): Promise<Partial<IResult>> {
     const [course] = await repository.find({
       where: { id },
       withDeleted: options?.withDeleted ?? false
@@ -47,16 +44,18 @@ export class CoursesService {
   }
 
   async updateCourse (id: number, attrs: Partial<Course>): Promise<Partial<IResult>> {
-    const { entity: course } = await this.findCourse(id);
+    const { entity: savedCourse } = await this.findCourse(id);
 
-    if (!course) {
+    if (!savedCourse) {
       return {
         message: `No se encontró el curso con el identificador: ${id}`,
         entity: null
       };
     }
 
-    Object.assign(course, attrs);
+    Object.assign(savedCourse, attrs);
+
+    const course = await repository.save(savedCourse);
 
     return {
       message: `Se actualizaron correctamente los datos del curso con el identificador: ${id}`,
