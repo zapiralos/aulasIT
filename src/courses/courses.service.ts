@@ -1,33 +1,44 @@
 import { validate } from 'class-validator';
 import { CoursesRepository } from './courses.repository';
 import { type Course } from './course.entity';
-import { type CreateCourseDTO } from './dto/create-course.dto';
 import { type IResult } from '../utils/interfaces/result.interface';
 import { IFindOptions } from '../utils/interfaces/options.interface';
 
 const repository = new CoursesRepository();
 
 export class CoursesService {
-  async createCourse (courseData: CreateCourseDTO): Promise<Course> {
-    const errors = await validate(courseData);
+  async createCourse (data: Partial<Course>): Promise<Partial<IResult>> {
+    const errors = await validate(data);
 
     if (errors.length > 0) {
-      throw new Error(`No se pudo agregar el curso debido a: ${errors}`);
+      return {
+        message: `No se pudo agregar el curso debido a: ${errors}`,
+        entity: null
+      };
     }
 
-    const course = repository.create(courseData);
+    const instance = repository.create(data);
+    const course = await repository.save(instance);
 
-    return await repository.save(course);
+    return {
+      message: `Se agregó correctamente el curso con el identificador: ${course.id}`,
+      entity: course
+    };
   }
 
   async listCourses (): Promise<Course[]> {
-    return await repository.find();
+    return await repository.find({
+      relations: {
+        mode: true
+      }
+    });
   }
 
   async findCourse (id: number, options?: IFindOptions): Promise<Partial<IResult>> {
     const [course] = await repository.find({
       where: { id },
-      withDeleted: options?.withDeleted ?? false
+      withDeleted: options?.withDeleted ?? false,
+      relations: { mode: true }
     });
 
     if (!course) {

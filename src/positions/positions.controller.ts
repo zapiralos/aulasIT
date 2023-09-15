@@ -3,7 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import { StatusCodes } from 'http-status-codes';
 import { CreatePositionDTO } from './dto/create-position.dto';
 import { PositionsService } from './positions.service';
-import { parseID } from '../utils/functions';
+import { parseNumber } from '../utils/functions';
 
 const service = new PositionsService();
 
@@ -24,7 +24,7 @@ export class PositionsController {
 
   async find (req: Request, res: Response): Promise<void> {
     try {
-      const id = parseID(req.query.id?.toString());
+      const id = parseNumber(req.query.id?.toString());
       const result = await service.find(id);
 
       if (!result.entity) {
@@ -56,7 +56,7 @@ export class PositionsController {
 
   async update (req: Request, res: Response): Promise<void> {
     try {
-      const id = parseID(req.query.id?.toString());
+      const id = parseNumber(req.query.id?.toString());
       const result = await service.update(id, req.body);
 
       res.status(StatusCodes.CREATED).json({
@@ -70,7 +70,7 @@ export class PositionsController {
 
   async delete (req: Request, res: Response): Promise<void> {
     try {
-      const id = parseID(req.query.id?.toString());
+      const id = parseNumber(req.query.id?.toString());
       const result = await service.delete(id);
 
       res.status(StatusCodes.OK).send(result.message);
@@ -81,7 +81,7 @@ export class PositionsController {
 
   async restore (req: Request, res: Response): Promise<void> {
     try {
-      const id = parseID(req.query.id?.toString());
+      const id = parseNumber(req.query.id?.toString());
       const result = await service.restore(id);
 
       res.status(StatusCodes.OK).send(result.message);

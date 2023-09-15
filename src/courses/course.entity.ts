@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
+import { Mode } from '../modes/mode.entity';
 
 @Entity('courses')
 export class Course extends BaseEntity {
@@ -9,11 +10,8 @@ export class Course extends BaseEntity {
   })
     price: number;
 
-  @Column({
-    type: 'int',
-    name: 'mode_id'
-  })
-    modeId: number;
+  @ManyToOne(() => Mode, (mode) => mode.id, { nullable: false, cascade: true })
+    mode: Mode;
 
   @Column({
     type: 'int',

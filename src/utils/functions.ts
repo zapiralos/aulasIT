@@ -26,10 +26,18 @@ export function extractErrorKeysFromErrors (errors: ValidationError[]): string[]
   return errorKeys;
 }
 
-export const parseID = (id: string | undefined): number => {
-  if (id === undefined) {
+export const parseNumber = (num: string | undefined | null): number => {
+  if (num === undefined) {
     return 0;
   }
 
-  return Number(id);
+  return Number(num);
+};
+
+export const parseString = (str: string | undefined | null): string => {
+  if (!str) {
+    return '';
+  }
+
+  return str;
 };
