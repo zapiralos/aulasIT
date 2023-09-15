@@ -1,6 +1,7 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Position } from '../positions/position.entity';
+import { Sector } from '../sector/sector.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -60,6 +61,12 @@ export class User extends BaseEntity {
     name: 'id_area'
   })
     areaId?: number | null;
+
+  @ManyToOne(() => Sector, (sector) => sector.users)
+  @JoinColumn({
+    name: 'id_area'
+  })
+    area: Sector;
 
   @Column({
     type: 'int',
