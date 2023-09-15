@@ -10,7 +10,7 @@ import { Mode } from './modes/mode.entity';
 export const dataSource = new DataSource({
   type: 'mysql',
   host: process.env.DB_HOST ?? 'localhost',
-  port: Number(process.env.DB_PORT) ?? 3000,
+  port: Number(process.env.DB_PORT) ?? 3306,
   username: process.env.DB_USERNAME ?? 'root',
   database: process.env.DB_DATABASE ?? 'aulasit',
   synchronize: true,

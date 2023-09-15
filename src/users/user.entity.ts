@@ -52,9 +52,8 @@ export class User extends BaseEntity {
   })
     guardian: string;
 
-  @Column({ default: null, name: 'positionId', type: 'int' })
   @ManyToOne(() => Position, (position) => position.id)
-    position?: number | null;
+    position?: Position | null;
 
   @Column({
     type: 'int',
@@ -64,7 +63,7 @@ export class User extends BaseEntity {
 
   @Column({
     type: 'int',
-    name: 'id_social_wellfare'
+    name: 'id_social_wellfare' /* tabla socialwelfare */
   })
     socialWellfareId?: number | null;
 }
