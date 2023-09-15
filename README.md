@@ -1,4 +1,4 @@
-# Documentación del Desarrollo Backend
+# 📄 Documentación del Desarrollo Backend
 
 ## Proyecto
 
@@ -11,18 +11,29 @@ Desarrollo de un sistema web para el registro de alumnos de un colegio o cualqui
 ## Tecnologías Utilizadas
 
 - Lenguaje de Programación: TypeScript
-- Entorno de Ejecución: Node.js
-- Framework de Desarrollo Web: Express.js
+- Entorno de Ejecución: Node.js - NestJs
+- Framework de Desarrollo Web: React
 - Base de Datos: Mysql
 - Sistema de Gestión de Versiones: Git
 
+## Diagrama de Entidades /MER - DER
+
+> https://miro.com/app/board/uXjVMr2AvLo=/
+
+## Repositorio Git
+
+> https://github.com/zapiralos/aulasIT.git
+
 ## Estructura del Proyecto
+
+Estructuramiento según NestJs, donde cada Componente tiene en carpeta sus servicios, controles, entidad, rutas, etc.
 
 ```Bash
 /aulasIT
     ├── /src
     │   ├── /auth
     │   ├── /base
+    │   ├── /modes
     │   ├── /courses
     │   ├── /positions
     │   ├── /sector
@@ -39,60 +50,141 @@ Desarrollo de un sistema web para el registro de alumnos de un colegio o cualqui
 
 ## Funcionalidades:
 
-> Gestión de usuario:
-
-- Login
-- Registro
-- Edición de Perfil
-
 > Roles de usuario: administrador, profesor, estudiante, mantenimiento.
 
-> Gestión de Programas Académicos:
+> Gestión de usuario:
 
-- Creación
-- Edición y eliminación de programas académicos.
+- Registro
+- Login
+- Edición de Perfil
 
-> Asignación de profesores a programas académicos.
+> Gestión de Administrador:
 
-> Gestión de Cursos:
+> > Roles de Usuario para controlar el acceso a funciones específicas.
 
-- Creación y gestión de cursos para programas académicos.
+- Edición: Asignación de Roles
+- Eliminación
 
-> Gestión de Inscripciones:
-> Inscripción de estudiantes en cursos.
+> > Asignación de profesores a Cursos.
 
-> Gestión de Contacto:
-> Recepción y respuesta a consultas de contacto.
+> > Gestión de Cursos:
+
+- Creación y gestión de cursos.
 
 > Autenticación y Seguridad
-
-> Uso de tokens JWT para autenticación de usuarios.
-
-> Roles de usuario para controlar el acceso a funciones específicas.
-
-> Seguridad de contraseñas mediante hashing.
 
 ## API´s
 
 El backend expone una API RESTful que permite a los desarrolladores frontend interactuar con la aplicación. Los puntos finales principales incluyen:
 
 ```bash
-
+Login:
 /api/v1/login/ Validación de login
-/api/v1/users/: CRUD de usuarios.
-/api/v1/sector/: CRUD de sectores.
-/api/v1/courses/: CRUD de cursos.
-/api/v1/positions/: CRUD de positions.
+Usuarios:
+/api/v1/users/ CRUD de usuarios.
+/api/v1/users/:ID CRUD de usuarios.
+
+/api/v1/modes/ CRUD de usuarios.
+/api/v1/sector/ CRUD de sectores.
+/api/v1/courses/ CRUD de cursos.
+/api/v1/positions/ CRUD de positions.
 
 ```
 
-## Diagrama de Entidades /MER - DER
+### 🔎 Test de API´s
 
-> https://miro.com/app/board/uXjVMr2AvLo=/
+> <font color="yellow">**GET**</font> // listado de todos los users
 
-## Repositorio Git
+```bash
+url/api/v1/users/
+```
 
-> https://github.com/zapiralos/aulasIT.git
+> <font color="yellow">**GET**</font> // Arroja un user especifico
+
+```bash
+url/api/v1/users/id de usuario a mostrar
+```
+
+> <font color="yellow">**POST**</font> // Crea un usuario (Registro)
+
+```bash
+url/api/v1/users/
+```
+
+Petición por body tipo JSON:
+
+```bash
+{
+    "email": "email",
+    "confirmEmail": "email",
+    "password": "contraseña",
+    "confirmPassword": "contraseña",
+    "firstName": "nombre",
+    "lastName": "apellido",
+    "address": "dirección",
+    "phoneNumber": numeroTelefonico,
+    "birthDate": "fecha de nacimiento",
+    "guardian": "nombre y apellido"
+}
+```
+
+Validación de Datos:
+| Campo | Tipo | Validación |
+| :--- | :----: | :--- |
+| email | string | no puede estar vacío, formato email |
+| confirmEmail | string | no puede estar vacío, formato email, igual al email |
+| password | string | no puede estar vacío, min: 8, max:100 |
+| confirmPassword | string | no puede estar vacío, min: 8, max:100, igual al password |
+| firstName | string | no puede estar vacío, Min: 2, Max:50 |
+| lastName | string | no puede estar vacío, Min: 2, Max:50 |
+| address | string | opcional, Max: 100 |
+| phoneNumber | int | no puede estar vacío |
+| birthDate | date | validación ISO 8601 |
+| guardian | string | no puede estar vacío, Max: 100 |
+| socialWellfareId | int | opcional |
+
+<br>
+
+> <font color="yellow">**PUT**</font> // Modifica 1 usuario (Edición)
+
+```bash
+url/api/v1/users/id de usuario a modificar
+```
+
+Petición por body tipo JSON:
+
+```json
+{
+    "email": "email",
+    "confirmEmail": "email",
+    "password": "contraseña",
+    "confirmPassword": "contraseña",
+    "address": "dirección",
+    "phoneNumber": numeroTelefonico,
+    "guardian": "nombre y apellido"
+}
+```
+
+Validación de Datos:
+| Campo | Tipo | Validación |
+| :--- | :----: | :--- |
+| email | string | opcional, formato email |
+| confirmEmail | string | opcional, formato email, igual al email |
+| password | string | opcional, min: 8, max:100 |
+| confirmPassword | string | opcional, min: 8, max:100, igual al password |
+| address | string | opcional, Max: 100 |
+| phoneNumber | int | opcional |
+| guardian | string | opcional, Max: 100 |
+
+<br>
+
+> <font color="yellow">**DELETE**</font> // listado de todos los users
+
+```bash
+url/api/v1/users/id de usuario a borrar
+```
+
+<br>
 
 ## Instalación y Despliegue
 
@@ -103,6 +195,11 @@ npm i
 ```
 
 Para poder tener todos las dependencias necesarias.
+Luego ejecutar el comando de ejecusión en desarrollo:
+
+```Bash
+npm run dev
+```
 
 ## Configuración
 

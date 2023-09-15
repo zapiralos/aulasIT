@@ -64,7 +64,7 @@ export class User extends BaseEntity {
 
   @Column({
     type: 'int',
-    name: 'id_social_wellfare'
+    name: 'id_social_wellfare' /* tabla socialwelfare */
   })
     socialWellfareId?: number | null;
 }
