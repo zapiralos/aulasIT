@@ -1,4 +1,5 @@
 import { IsDecimal, IsInt, IsNotEmpty } from 'class-validator';
+import { Mode } from '../../modes/mode.entity';
 
 export class CreateCourseDTO {
   @IsDecimal()
@@ -7,7 +8,7 @@ export class CreateCourseDTO {
 
   @IsInt()
   @IsNotEmpty()
-    modeId: number;
+    mode: Mode;
 
   @IsInt()
   @IsNotEmpty()
