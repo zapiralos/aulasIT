@@ -78,16 +78,32 @@ Estructuramiento según NestJs, donde cada Componente tiene en carpeta sus servi
 El backend expone una API RESTful que permite a los desarrolladores frontend interactuar con la aplicación. Los puntos finales principales incluyen:
 
 ```bash
-Login:
-/api/v1/login/ Validación de login
 Usuarios:
-/api/v1/users/ CRUD de usuarios.
-/api/v1/users/:ID CRUD de usuarios.
+GET / POST :
+/api/v1/users/
+GET ID / PUT / DELETE:
+/api/v1/users/:ID
 
-/api/v1/modes/ CRUD de usuarios.
-/api/v1/sector/ CRUD de sectores.
-/api/v1/courses/ CRUD de cursos.
-/api/v1/positions/ CRUD de positions.
+Login:
+/api/v1/auth/login/
+
+Cursos:
+GET / POST :
+/api/v1/curses/
+GET ID / PUT / DELETE:
+/api/v1/curses/:ID
+
+Sector:
+GET / POST :
+/api/v1/sectors/
+GET ID / PUT / DELETE:
+/api/v1/sectors/:ID
+
+Modos:
+GET / POST :
+/api/v1/modes/
+GET ID / PUT / DELETE:
+/api/v1/modes/:ID
 
 ```
 
