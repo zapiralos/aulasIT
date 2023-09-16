@@ -38,7 +38,17 @@ export class CategoriesController {
 
   async find (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint no está disponible.');
+      const id = Number(req.query.id);
+      const { message, entity } = await service.findById(id);
+
+      if (!entity) {
+        res.status(StatusCodes.NOT_FOUND).send(message);
+      }
+
+      res.status(StatusCodes.OK).json({
+        message,
+        entity
+      });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }
@@ -46,7 +56,13 @@ export class CategoriesController {
 
   async update (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint no está disponible.');
+      const id = Number(req.query.id);
+      const result = await service.update(id, req.body);
+
+      res.status(StatusCodes.CREATED).json({
+        message: result.message,
+        entity: result.entity
+      });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }
@@ -54,7 +70,15 @@ export class CategoriesController {
 
   async delete (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint no está disponible.');
+      const id = Number(req.query.id);
+      const { statusCode, message } = await service.delete(id);
+
+      if (statusCode === 404) {
+        res.status(StatusCodes.NOT_FOUND).send(message);
+        return;
+      }
+
+      res.status(StatusCodes.OK).send(message);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }
@@ -62,7 +86,10 @@ export class CategoriesController {
 
   async restore (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send('Este endpoint no está disponible.');
+      const id = Number(req.query.id);
+      const result = await service.restore(id);
+
+      res.status(StatusCodes.OK).send(result.message);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }
