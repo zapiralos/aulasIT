@@ -10,6 +10,7 @@ import authRouter from './auth/auth.router';
 import { router as coursesRouter } from './courses/courses.router';
 import { router as positionsRouter } from './positions/positions.router';
 import { router as modesRouter } from './modes/modes.router';
+import { router as categoriesRouter } from './categories/categories.router';
 import sectorRouter from './sector/sector.router';
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/courses', coursesRouter);
 app.use('/api/v1/positions', positionsRouter);
 app.use('/api/v1/modes', modesRouter);
+app.use('/api/v1/categories', categoriesRouter);
 app.use('/api/v1/sectors', sectorRouter);
 
 connect()

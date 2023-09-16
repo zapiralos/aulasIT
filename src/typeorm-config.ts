@@ -6,6 +6,7 @@ import { Sector } from './sector/sector.entity';
 import { Position } from './positions/position.entity';
 import 'reflect-metadata';
 import { Mode } from './modes/mode.entity';
+import { Category } from './categories/category.entity';
 
 export const dataSource = new DataSource({
   type: 'mysql',
@@ -14,7 +15,7 @@ export const dataSource = new DataSource({
   username: process.env.DB_USERNAME ?? 'root',
   database: process.env.DB_DATABASE ?? 'aulasit',
   synchronize: true,
-  entities: [BaseEntity, User, Course, Sector, Position, Mode],
+  entities: [BaseEntity, User, Course, Sector, Position, Mode, Category],
   migrations: ['src/migrations/**/*.ts'],
   subscribers: ['src/subscribers/**/*.ts']
 });
