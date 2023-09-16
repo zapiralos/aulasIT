@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { plainToInstance } from 'class-transformer';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDTO } from './dto/create-category.dto';
+import { MessagesCodes } from '../utils/messages-codes';
 
 const service = new CategoriesService();
 
@@ -13,18 +14,33 @@ export class CategoriesController {
       const category = await service.findByNameWithoutValidation(instance.name);
       const exists = category !== null;
 
-      if (exists) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-          message: `La categoría ${category.name} ya existe.`,
-          entity: category
-        });
+      if (category?.deletedAt) {
+        const { message, entity } = await service.restore(category.id);
 
+        res.status(StatusCodes.CREATED).json({
+          message,
+          entity
+        });
         return;
       }
 
-      res.status(StatusCodes.CREATED).json(await service.create(instance));
+      if (exists) {
+        res.status(StatusCodes.BAD_REQUEST).send(`La categoría "${category?.name}" ya existe.`);
+        return;
+      }
+
+      const { message, entity } = await service.create(instance);
+
+      if (!entity) {
+        res.status(StatusCodes.BAD_REQUEST).send(message);
+      }
+
+      res.status(StatusCodes.CREATED).json({
+        message,
+        entity
+      });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -32,7 +48,7 @@ export class CategoriesController {
     try {
       res.status(StatusCodes.OK).json(await service.list());
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -50,7 +66,7 @@ export class CategoriesController {
         entity
       });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -64,7 +80,7 @@ export class CategoriesController {
         entity: result.entity
       });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -80,7 +96,7 @@ export class CategoriesController {
 
       res.status(StatusCodes.OK).send(message);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -91,7 +107,7 @@ export class CategoriesController {
 
       res.status(StatusCodes.OK).send(result.message);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 }

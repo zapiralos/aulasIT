@@ -20,6 +20,13 @@ export class CategoriesService {
     const instance = repository.create(data);
     const category = await repository.save(instance);
 
+    if (!category) {
+      return {
+        message: 'Ocurrió un error al agregar la nueva categoría.',
+        entity: null
+      };
+    }
+
     return {
       message: `Se agregó correctamente la categoría ${category.name}`,
       entity: category
@@ -59,7 +66,11 @@ export class CategoriesService {
   }
 
   async findByNameWithoutValidation (name: string): Promise<Category | null> {
-    return await repository.findOneBy({ name });
+    const [category] = await repository.find({ where: { name }, withDeleted: true });
+
+    if (!category) return null;
+
+    return category;
   }
 
   async update (id: number, attrs: CreateCategoryDTO): Promise<Partial<IResult>> {
@@ -104,6 +115,7 @@ export class CategoriesService {
 
   async restore (id: number): Promise<Partial<IResult>> {
     const result = await repository.restore(id);
+    const { entity } = await this.findById(id);
 
     if (result.affected === 0) {
       return {
@@ -114,7 +126,7 @@ export class CategoriesService {
 
     return {
       message: `Se restauró correctamente la categoría con el identificador: ${id}`,
-      entity: null
+      entity
     };
   }
 }

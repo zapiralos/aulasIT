@@ -11,6 +11,6 @@ export class Category extends BaseEntity {
   })
     name: string;
 
-  @OneToMany(() => Course, (course) => course.category, { cascade: true })
+  @OneToMany(() => Course, (course) => course.category, { cascade: ['soft-remove'] })
     courses: Course[];
 }

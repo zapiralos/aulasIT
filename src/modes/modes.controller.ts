@@ -11,18 +11,33 @@ export class ModesController {
   async create (req: Request, res: Response): Promise<void> {
     try {
       const instance = plainToInstance(CreateModeDTO, req.body);
-      const result = await service.create(instance);
+      const mode = await service.findByNameWithoutValidation(instance.name);
+      const exists = mode !== null;
 
-      if (!result.entity) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-          message: result.message,
-          entity: result.entity
+      if (mode?.deletedAt) {
+        const { message, entity } = await service.restore(mode.id);
+
+        res.status(StatusCodes.CREATED).json({
+          message,
+          entity
         });
+        return;
+      }
+
+      if (exists) {
+        res.status(StatusCodes.BAD_REQUEST).send(`La modalidad "${mode.name}" ya existe.`);
+        return;
+      }
+
+      const { message, entity } = await service.create(instance);
+
+      if (!entity) {
+        res.status(StatusCodes.BAD_REQUEST).send(message);
       }
 
       res.status(StatusCodes.CREATED).json({
-        message: result.message,
-        entity: result.entity
+        message,
+        entity
       });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
@@ -55,7 +70,15 @@ export class ModesController {
 
   async delete (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send(MessagesCodes.NOT_IMPLEMENTED);
+      const id = Number(req.query.id);
+      const { statusCode, message } = await service.delete(id);
+
+      if (statusCode === 404) {
+        res.status(StatusCodes.NOT_FOUND).send(message);
+        return;
+      }
+
+      res.status(StatusCodes.OK).send(message);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
