@@ -35,7 +35,7 @@ export class CategoriesService {
 
   async list (): Promise<Partial<IResult>> {
     return {
-      message: 'Categorías guardadas',
+      message: 'Categorías guardadas:',
       entities: await repository.find({
         relations: {
           courses: true
@@ -88,7 +88,7 @@ export class CategoriesService {
     const category = await repository.save(savedCategory);
 
     return {
-      message: `Se actualizaron correctamente los datos del curso con el identificador: ${id}`,
+      message: `Se actualizaron correctamente los datos de la categoría con el identificador: ${id}`,
       entity: category
     };
   }

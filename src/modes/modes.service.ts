@@ -33,6 +33,17 @@ export class ModesService {
     };
   }
 
+  async list (): Promise<Partial<IResult>> {
+    return {
+      message: 'Modalidades guardadas:',
+      entities: await repository.find({
+        relations: {
+          courses: true
+        }
+      })
+    };
+  }
+
   async findById (id: number): Promise<Partial<IResult>> {
     const [mode] = await repository.find({
       where: { id },
@@ -76,6 +87,26 @@ export class ModesService {
     if (!mode) return null;
 
     return mode;
+  }
+
+  async update (id: number, attrs: CreateModeDTO): Promise<Partial<IResult>> {
+    const savedMode = await repository.findOneBy({ id });
+
+    if (!savedMode) {
+      return {
+        message: `No se encontró la modalidad con el identificador: ${id}`,
+        entity: null
+      };
+    }
+
+    Object.assign(savedMode, attrs);
+
+    const mode = await repository.save(savedMode);
+
+    return {
+      message: `Se actualizaron correctamente los datos de la modalidad con el identificador: ${id}`,
+      entity: mode
+    };
   }
 
   async delete (id: number): Promise<Partial<IResult>> {

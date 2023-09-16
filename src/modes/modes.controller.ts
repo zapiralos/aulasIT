@@ -46,7 +46,18 @@ export class ModesController {
 
   async find (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send(MessagesCodes.NOT_IMPLEMENTED);
+      const id = Number(req.query.id);
+      const { message, entity } = await service.findById(id);
+
+      if (!entity) {
+        res.status(StatusCodes.NOT_FOUND).send(message);
+        return;
+      }
+
+      res.status(StatusCodes.OK).json({
+        message,
+        entity
+      });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
@@ -54,7 +65,13 @@ export class ModesController {
 
   async list (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send(MessagesCodes.NOT_IMPLEMENTED);
+      const { message, entities: modes } = await service.list();
+
+      res.status(StatusCodes.OK).json({
+        message,
+        count: modes?.length,
+        data: modes
+      });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
@@ -62,7 +79,13 @@ export class ModesController {
 
   async update (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send(MessagesCodes.NOT_IMPLEMENTED);
+      const id = Number(req.query.id);
+      const { message, entity } = await service.update(id, req.body);
+
+      res.status(StatusCodes.CREATED).json({
+        message,
+        entity
+      });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
@@ -86,7 +109,10 @@ export class ModesController {
 
   async restore (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.NOT_IMPLEMENTED).send(MessagesCodes.NOT_IMPLEMENTED);
+      const id = Number(req.query.id);
+      const result = await service.restore(id);
+
+      res.status(StatusCodes.OK).send(result.message);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }

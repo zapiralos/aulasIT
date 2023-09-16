@@ -44,9 +44,15 @@ export class CategoriesController {
     }
   }
 
-  async list (_req: Request, res: Response): Promise<void> {
+  async list (req: Request, res: Response): Promise<void> {
     try {
-      res.status(StatusCodes.OK).json(await service.list());
+      const { message, entities: categories } = await service.list();
+
+      res.status(StatusCodes.OK).json({
+        message,
+        count: categories?.length,
+        data: categories
+      });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
@@ -59,6 +65,7 @@ export class CategoriesController {
 
       if (!entity) {
         res.status(StatusCodes.NOT_FOUND).send(message);
+        return;
       }
 
       res.status(StatusCodes.OK).json({
