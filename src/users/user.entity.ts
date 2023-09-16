@@ -53,8 +53,17 @@ export class User extends BaseEntity {
   })
     guardian: string;
 
+  @Column({
+    type: 'int',
+    name: 'id_position'
+  })
+    positionId?: number | null;
+
   @ManyToOne(() => Position, (position) => position.id)
-    position?: Position | null;
+  @JoinColumn({
+    name: 'id_position'
+  })
+    position: Position;
 
   @Column({
     type: 'int',
