@@ -28,6 +28,7 @@ export class CoursesController {
 
       res.status(StatusCodes.OK).json({
         message: 'Lista de cursos.',
+        count: courses.length,
         data: courses
       });
     } catch (error) {

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Mode } from '../modes/mode.entity';
 
@@ -10,24 +10,33 @@ export class Course extends BaseEntity {
   })
     price: number;
 
-  @ManyToOne(() => Mode, (mode) => mode.id, { nullable: false, cascade: true })
+  @Column({
+    type: 'int',
+    name: 'id_mode'
+  })
+    modeId?: number | null;
+
+  @ManyToOne(() => Mode, (mode) => mode.id)
+  @JoinColumn({
+    name: 'id_mode'
+  })
     mode: Mode;
 
   @Column({
     type: 'int',
-    name: 'category_id'
+    name: 'id_category'
   })
-    categoryId: number;
+    categoryId: number | null;
 
   @Column({
     type: 'int',
-    name: 'teacher_id'
+    name: 'id_teacher'
   })
-    teacherId: number;
+    teacherId: number | null;
 
   @Column({
     type: 'int',
-    name: 'subject_id'
+    name: 'id_subject'
   })
-    subjectId: number;
+    subjectId: number | null;
 }

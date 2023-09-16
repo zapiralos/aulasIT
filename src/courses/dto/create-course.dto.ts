@@ -1,24 +1,23 @@
-import { IsDecimal, IsInt, IsNotEmpty } from 'class-validator';
-import { Mode } from '../../modes/mode.entity';
+import { IsDecimal, IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateCourseDTO {
-  @IsDecimal()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'El precio no puede estar vacío.' })
+  @IsDecimal({ decimal_digits: '2' })
     price: number;
 
   @IsInt()
-  @IsNotEmpty()
-    mode: Mode;
+  @IsOptional()
+    modeId: number | null;
 
   @IsInt()
-  @IsNotEmpty()
-    categoryId: number;
+  @IsOptional()
+    categoryId: number | null;
 
   @IsInt()
-  @IsNotEmpty()
-    teacherId: number;
+  @IsOptional()
+    teacherId: number | null;
 
   @IsInt()
-  @IsNotEmpty()
-    subjectId: number;
+  @IsOptional()
+    subjectId: number | null;
 }
