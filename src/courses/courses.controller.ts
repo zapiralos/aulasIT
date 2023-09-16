@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import { parseNumber } from '../utils/functions';
 import { plainToInstance } from 'class-transformer';
 import { CreateCourseDTO } from './dto/create-course.dto';
+import { MessagesCodes } from '../utils/messages-codes';
 
 const service = new CoursesService();
 
@@ -18,7 +19,7 @@ export class CoursesController {
         entity: result.entity
       });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -32,7 +33,7 @@ export class CoursesController {
         data: courses
       });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -51,7 +52,7 @@ export class CoursesController {
         entity: result.entity
       });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -65,7 +66,7 @@ export class CoursesController {
         entity: result.entity
       });
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -76,7 +77,7 @@ export class CoursesController {
 
       res.status(StatusCodes.OK).send(result.message);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 
@@ -87,7 +88,7 @@ export class CoursesController {
 
       res.status(StatusCodes.OK).send(result.message);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`${MessagesCodes.INTERNAL_SERVER_ERROR} ${error}`);
     }
   }
 }
