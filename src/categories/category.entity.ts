@@ -11,6 +11,6 @@ export class Category extends BaseEntity {
   })
     name: string;
 
-  @OneToMany(() => Course, (course) => course.mode)
+  @OneToMany(() => Course, (course) => course.category)
     courses: Course[];
 }

@@ -17,7 +17,7 @@ export class Course extends BaseEntity {
   })
     modeId?: number | null;
 
-  @ManyToOne(() => Mode, (mode) => mode.id)
+  @ManyToOne(() => Mode, (mode) => mode.courses)
   @JoinColumn({
     name: 'id_mode'
   })
@@ -29,7 +29,7 @@ export class Course extends BaseEntity {
   })
     categoryId: number | null;
 
-  @ManyToOne(() => Category, (category) => category.id)
+  @ManyToOne(() => Category, (category) => category.courses)
   @JoinColumn({
     name: 'id_category'
   })

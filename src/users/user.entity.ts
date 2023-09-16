@@ -59,7 +59,7 @@ export class User extends BaseEntity {
   })
     positionId?: number | null;
 
-  @ManyToOne(() => Position, (position) => position.id)
+  @ManyToOne(() => Position, (position) => position.users)
   @JoinColumn({
     name: 'id_position'
   })

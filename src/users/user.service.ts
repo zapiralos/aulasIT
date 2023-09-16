@@ -88,7 +88,12 @@ export class UserService {
   }
 
   async find (): Promise<User[]> {
-    return await userRepository.find();
+    return await userRepository.find({
+      relations: {
+        position: true,
+        area: true
+      }
+    });
   }
 
   async findOneById (id: number): Promise<IResult> {
