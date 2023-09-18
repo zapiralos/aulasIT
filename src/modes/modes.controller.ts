@@ -13,8 +13,9 @@ export class ModesController {
       const instance = plainToInstance(CreateModeDTO, req.body);
       const mode = await service.findByNameWithoutValidation(instance.name);
       const exists = mode !== null;
+      const isDeleted = !!mode?.deletedAt;
 
-      if (mode?.deletedAt) {
+      if (isDeleted) {
         const { message, entity } = await service.restore(mode.id);
 
         res.status(StatusCodes.CREATED).json({

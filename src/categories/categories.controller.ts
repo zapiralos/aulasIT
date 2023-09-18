@@ -13,8 +13,9 @@ export class CategoriesController {
       const instance = plainToInstance(CreateCategoryDTO, req.body);
       const category = await service.findByNameWithoutValidation(instance.name);
       const exists = category !== null;
+      const isDeleted = !!category?.deletedAt;
 
-      if (category?.deletedAt) {
+      if (isDeleted) {
         const { message, entity } = await service.restore(category.id);
 
         res.status(StatusCodes.CREATED).json({
